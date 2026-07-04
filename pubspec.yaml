@@ -1,0 +1,17 @@
+name: zetra_id
+description: "Zetra ID — universal identity system for the Zetra ecosystem."
+publish_to: 'none'
+version: 0.0.1
+environment:
+  sdk: ">=2.18.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
