@@ -13,7 +13,9 @@ class ZetraApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Zetra ID',
-      theme: AppTheme.light(),
+      theme: AppTheme.dark(),
+      darkTheme: AppTheme.dark(),
+      themeMode: ThemeMode.dark,
       home: const WelcomePage(),
       useMaterial3: true,
     );
