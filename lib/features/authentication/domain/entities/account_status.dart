@@ -1,21 +1,34 @@
 enum AccountStatus {
-  pending('pending'),
-  active('active'),
-  suspended('suspended'),
-  deleted('deleted');
+  pending,
+  active,
+  suspended,
+  deleted,
+}
 
-  final String value;
-
-  const AccountStatus(this.value);
-
-  static AccountStatus fromString(String value) {
-    return AccountStatus.values.firstWhere(
-      (status) => status.value == value,
-      orElse: () => AccountStatus.pending,
-    );
+extension AccountStatusExtension on AccountStatus {
+  String get value {
+    switch (this) {
+      case AccountStatus.pending:
+        return 'pending';
+      case AccountStatus.active:
+        return 'active';
+      case AccountStatus.suspended:
+        return 'suspended';
+      case AccountStatus.deleted:
+        return 'deleted';
+    }
   }
 
-  String toDisplayString() {
-    return value[0].toUpperCase() + value.substring(1);
+  static AccountStatus fromString(String value) {
+    switch (value.toLowerCase()) {
+      case 'active':
+        return AccountStatus.active;
+      case 'suspended':
+        return AccountStatus.suspended;
+      case 'deleted':
+        return AccountStatus.deleted;
+      default:
+        return AccountStatus.pending;
+    }
   }
 }
