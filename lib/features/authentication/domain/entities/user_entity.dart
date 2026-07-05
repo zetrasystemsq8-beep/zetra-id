@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'account_status.dart';
 
 class UserEntity extends Equatable {
   final String id;
@@ -7,8 +8,12 @@ class UserEntity extends Equatable {
   final String username;
   final String zetraId;
   final String zetraNumber;
+
   final String? profileImage;
-  final String status;
+  final String? bio;
+
+  final AccountStatus status;
+
   final DateTime createdAt;
   final DateTime? lastLogin;
 
@@ -20,6 +25,7 @@ class UserEntity extends Equatable {
     required this.zetraId,
     required this.zetraNumber,
     this.profileImage,
+    this.bio,
     required this.status,
     required this.createdAt,
     this.lastLogin,
@@ -34,6 +40,7 @@ class UserEntity extends Equatable {
         zetraId,
         zetraNumber,
         profileImage,
+        bio,
         status,
         createdAt,
         lastLogin,
