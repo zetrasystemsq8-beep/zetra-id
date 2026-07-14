@@ -1,50 +1,42 @@
-name: Zetra ID Backend CI
+name: Flutter Android CI
 
 on:
   push:
-    branches:
-      - main
-      - master
-      - develop
+    branches: [main, master]
   pull_request:
-    branches:
-      - main
-      - master
-      - develop
-
-env:
-  CARGO_TERM_COLOR: always
+    branches: [main, master]
 
 jobs:
-  build:
+  build-apk:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
 
-      - name: Cache Cargo
-        uses: Swatinem/rust-cache@v2
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
 
-      - name: Build
-        run: cargo build --release
+      - name: Install dependencies
+        run: flutter pub get
 
-      - name: Run Tests
-        run: cargo test --release --all || true
+      - name: Analyze
+        run: flutter analyze
 
-  docker:
-    needs: build
-    runs-on: ubuntu-latest
+      - name: Build Release APK
+        run: flutter build apk --release
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build Docker image
-        run: docker build -t zetra-id .
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: zetra-id-release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
